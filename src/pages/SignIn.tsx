@@ -1,14 +1,36 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signInUser } from "../api/apiServices";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+
+  const mutation = useMutation({
+    mutationFn:signInUser,
+    onSuccess:(data)=>{
+        console.log("Signin Successfull:", data);
+
+        //save token and user in local storage
+        localStorage.setItem("token",data.token);
+        localStorage.setItem("user",JSON.stringify(data.user));
+
+        //redirect to home page
+        navigate("/");
+    },
+    onError:(error:any)=>{
+        console.error("Login failed:", error.response?.data?.message || "Something went wrong");
+    }
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle signin logic here
-    console.log("Signin:", email, password);
+    mutation.mutate({ email, password });
+    // console.log("Signin:", email, password);
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-800">
