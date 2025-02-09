@@ -1,30 +1,46 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInUser } from "../api/apiServices";
+import { getCurrentUser, signInUser } from "../api/apiServices";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+  });
+
+  // ✅ Redirect logged-in user based on role
+  if (user) {
+    const redirectPath = user.role === "admin" ? "/dashboard" : "/";
+    navigate(redirectPath, { replace: true });
+  }
 
   const mutation = useMutation({
-    mutationFn:signInUser,
-    onSuccess:(data)=>{
-        console.log("Signin Successfull:", data);
+    mutationFn: signInUser,
+    onSuccess: (data) => {
+      console.log("Signin Successfull:", data);
 
-        //save token and user in local storage
-        localStorage.setItem("token",data.token);
-        localStorage.setItem("user",JSON.stringify(data.user));
+      localStorage.setItem("token", data.token); // Store token
+      const redirectPath = data.user.role === "admin" ? "/dashboard" : "/";
+      navigate(redirectPath, { replace: true }); // Redirect after login
+      //save token and user in local storage
+      //   localStorage.setItem("token", data.token);
+      //   localStorage.setItem("user", JSON.stringify(data.user));
 
-        //redirect to home page
-        navigate("/");
+      //   //redirect to home page
+      //   navigate("/");
     },
-    onError:(error:any)=>{
-        console.error("Login failed:", error.response?.data?.message || "Something went wrong");
-    }
-  })
+    onError: (error: any) => {
+      console.error(
+        "Login failed:",
+        error.response?.data?.message || "Something went wrong"
+      );
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +48,8 @@ const SignIn = () => {
     mutation.mutate({ email, password });
     // console.log("Signin:", email, password);
   };
+
+  if (isLoading) return <div>Loading...</div>;
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-800">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
@@ -40,7 +58,7 @@ const SignIn = () => {
           <div className="space-y-2 flex flex-col">
             <label htmlFor="email">Email</label>
             <input
-             className="w-full h-12 px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full h-12 px-3 py-2 border border-gray-300 rounded-md"
               id="email"
               type="email"
               placeholder="Enter your email"
@@ -52,7 +70,7 @@ const SignIn = () => {
           <div className="space-y-2 flex flex-col">
             <label htmlFor="password">Password</label>
             <input
-             className="w-full h-12 px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full h-12 px-3 py-2 border border-gray-300 rounded-md"
               id="password"
               type="password"
               placeholder="Enter your password"
@@ -61,7 +79,10 @@ const SignIn = () => {
               required
             />
           </div>
-          <button type="submit" className="w-full h-12 bg-blue-500 text-white rounded-md">
+          <button
+            type="submit"
+            className="w-full h-12 bg-blue-500 text-white rounded-md"
+          >
             Sign In
           </button>
         </form>
