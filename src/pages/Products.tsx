@@ -31,6 +31,7 @@ const Products = () => {
     navigate("/edit-product", { state: { product } }); // ✅ Pass product via state
   };
 
+  
   return (
     <div>
       <div className="flex  justify-center  min-h-screen bg-gray-800">
