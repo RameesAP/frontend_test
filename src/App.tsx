@@ -29,7 +29,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/users" element={<Users />} />
+            {/* <Route path="/users" element={<Users />} /> */}
             <Route path="/sales" element={<Sales />} />
             <Route path="/add-product" element={<ProductForm />} />
             <Route path="/edit-product" element={<ProductForm />} />

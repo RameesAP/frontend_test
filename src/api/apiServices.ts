@@ -66,6 +66,20 @@ export const deleteProduct = async (productId: string) => {
   }
 };
 
+//order product
+export const orderProduct = async (orderData: {
+  productId: string;
+  quantity: number;
+}) => {
+  try {
+    const response = await axiosInstance.post("/api/sale/create-sale", orderData);
+    return response.data;
+  } catch (error) {
+    console.error("Error ordering product:", error);
+    throw error;
+  }
+};
+
 //user signUpUser
 export const signUpUser = async (userData: {
   name: string;
@@ -114,3 +128,25 @@ export const getCurrentUser = async () => {
       return null;
     }
   };
+
+  //get all users
+export const getAllUsers = async () => {
+    try {
+      const response = await axiosInstance.get("/api/admin/users");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  };
+
+  //get all sales
+  export const getAllSales = async () => {
+    try {
+      const response = await axiosInstance.get("/api/sale/get-sales");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching sales:", error);
+      throw error;
+    }
+  }
