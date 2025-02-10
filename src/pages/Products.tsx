@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { listProducts } from "../Hooks/customHooks";
 import { useDeleteProduct } from "../Hooks/mutationHooks";
 

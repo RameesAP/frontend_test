@@ -9,7 +9,7 @@ const Nav = () => {
 //     queryFn: getCurrentUser,
 //   });
 
-const { data: user, isLoading } = useCurrentUser();
+const { data: user } = useCurrentUser();
 
   const location = useLocation();
   const navigate = useNavigate();

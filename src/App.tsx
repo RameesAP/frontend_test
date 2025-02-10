@@ -7,7 +7,7 @@ import SignIn from "./pages/SignIn";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
-import Users from "./pages/Users";
+// import Users from "./pages/Users";
 import Nav from "./components/Nav";
 import Sales from "./pages/Sales";
 import ProductForm from "./pages/ProductAddEdit";
