@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getAllProducts, getAllSales, getAllUsers, getCurrentUser } from "../api/apiServices"
+import { getAllProducts, getAllSales, getAllUsers, getCurrentUser, getDashboardData } from "../api/apiServices"
 
 export const useCurrentUser =()=>{
     return useQuery({
@@ -22,6 +22,14 @@ export const listProducts = () => {
       queryKey: ["users"],
       queryFn: getAllUsers,
     });
+  }
+
+  //get sale count and customer count
+  export const PiechartData = () => {
+    return useQuery({
+      queryKey: ["dashboard"],
+      queryFn: getDashboardData,
+    })
   }
 
 //get all sales

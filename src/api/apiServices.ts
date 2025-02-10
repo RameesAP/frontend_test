@@ -12,6 +12,17 @@ export const getAllProducts = async () => {
   }
 };
 
+//get total sales count and customers count
+export const getDashboardData = async () => {
+  try {
+    const response = await axiosInstance.get("/api/sale/get-sales-stats");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching dashboard data:", error);
+    throw error;
+  }
+}
+
 // create single products
 export const createProduct = async (productData: {
   name: string;
