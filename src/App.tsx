@@ -11,6 +11,7 @@ import Products from "./pages/Products";
 import Nav from "./components/Nav";
 import Sales from "./pages/Sales";
 import ProductForm from "./pages/ProductAddEdit";
+import Jobs from "./pages/Jobs";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
-            {/* <Route path="/users" element={<Users />} /> */}
+            <Route path="/Jobs" element={<Jobs />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/add-product" element={<ProductForm />} />
             <Route path="/edit-product" element={<ProductForm />} />

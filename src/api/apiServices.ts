@@ -1,4 +1,5 @@
 // import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 //get all products
@@ -161,3 +162,24 @@ export const getAllUsers = async () => {
       throw error;
     }
   }
+
+
+  const secAxiosInstance = axios.create({
+    baseURL: "https://jsearch.p.rapidapi.com",
+    headers: {
+      "X-RapidAPI-Key": "32eaa07a8bmshf0dfc6c47bcb4e4p1745dfjsndeb6e914a166",
+      "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
+    },
+  });
+  
+  export const getJobListings = async () => {
+    try {
+      const response = await secAxiosInstance.get("/search", {
+        params: { query: "React Native developer", num_pages: "1", limit: "1" },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching job listings:", error);
+      throw error;
+    }
+  };

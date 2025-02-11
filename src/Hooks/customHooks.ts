@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getAllProducts, getAllSales, getAllUsers, getCurrentUser, getDashboardData } from "../api/apiServices"
+import { getAllProducts, getAllSales, getAllUsers, getCurrentUser, getDashboardData, getJobListings } from "../api/apiServices"
 
 export const useCurrentUser =()=>{
     return useQuery({
@@ -38,4 +38,11 @@ export const listSales = () => {
     queryKey: ["sales"],
     queryFn: getAllSales,
   });
+}
+
+export const getJobs =()=>{
+  return useQuery({
+    queryKey: ["jobs"],
+    queryFn: getJobListings,
+  })
 }
